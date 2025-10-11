@@ -30,8 +30,8 @@ mean(bos$pctFT, na.rm = TRUE)
 SD(bos$pctFT, na.rm = TRUE)
 bos[!complete.cases(bos),]
 dim(bos)
-new <- na.omit(bos)
-dim(new)
+new_summary <- na.omit(bos)
+dim(new_summary)
 
 #Read Data
 max(bos$numberGameTeamSeason)
@@ -66,6 +66,7 @@ bos %>% ggplot(aes((x = plusminus), fill = outcomeGame)) +
   geom_histogram(alpha = 0.5, color = "black") + 
   facet_grid(vars(outcomeGame), vars(locationGame)) +
   labs(
+    x = "Plus-minus stat",
     title = "Player Point Differential in a Win/Loss", "Season 2021-2022"
   ) +
   theme_bw()
@@ -77,7 +78,10 @@ bos %>% ggplot(aes(x = minutes, y = pts, col = outcomeGame)) +
   theme_bw()
 
 #Bar Plot
-new %>% ggplot(aes(x = factor(namePlayer), y = (sum(fgm) + 0.5*sum(fg3m))/sum(fga), fill = namePlayer)) +
+new_summary %>%
+  group_by(namePlayer) %>%
+  summarise(efficiency = (sum(fgm) + 0.5 * sum(fg3m)) / sum(fga)) %>%
+  ggplot(aes(x = factor(namePlayer), y = efficiency, fill = namePlayer)) +
   geom_col(show.legend = FALSE) +
   coord_flip()
 
