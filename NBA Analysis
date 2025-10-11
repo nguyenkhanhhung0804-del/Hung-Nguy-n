@@ -1,4 +1,4 @@
-bos <- read_csv("https://raw.githubusercontent.com/bkrai/Sports-Analytics-With-R/main/2022BOS.csv")
+bos <- read.csv("https://raw.githubusercontent.com/bkrai/Sports-Analytics-With-R/main/2022BOS.csv")
 str(bos)
 head(bos, 3)
 tail(bos, 3)
